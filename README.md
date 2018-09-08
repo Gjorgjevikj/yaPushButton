@@ -55,6 +55,28 @@ Implements auto-repeat when the button is being held depressed. Callback functio
 	  void handle(); // To be called repeatedly in a loop (services auto-repeating calls)
 	}
 
+Examle:
+
+	void Button1Callback()
+	{
+		tone(BUZZER_PIN, 1000, 10);
+		Serial.print('1');
+	}
+
+	PushButtonAutoRepeat<> Button1(PB_PIN_MINUS, Button1Callback);
+	. . .
+	Button1.init();
+	. . .
+	void loop() 
+	{
+		if (Button1.stateChanged() == BUTTON_RELEASED)
+			Serial.println('<');
+
+		Button1.handle();
+
+		// do whatever else is needed in the loop
+	}
+
 ## PushButton2SpeedAutoRepeat class
 
 Implements acceleration of auto-repeat - when the button is being held depressed long enough, the rate of generating key-presses enters 2nd speed.
@@ -86,7 +108,6 @@ Implements gradual acceleration of auto-repeat as the button is being held depre
 	  unsigned long getRepeatPeriodAcc();
 	}
 
-see the examples
+See the examples in the examples\ folder.
 
-comments are velcome
-
+Comments are velcome.
