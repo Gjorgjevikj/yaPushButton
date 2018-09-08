@@ -1,0 +1,54 @@
+#######################################
+# Syntax Coloring Map For yaPushButton
+#######################################
+
+#######################################
+# DataTypes (KEYWORD1)
+#######################################
+
+ButtonStateChange	KEYWORD1
+PushButton	KEYWORD1
+PushButtonAutoRepeat	KEYWORD1
+PushButton2SpeedAutoRepeat KEYWORD1
+PushButtonAutoAcceleratedRepeat	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+## PushButton
+init	KEYWORD2
+getSinglePress	KEYWORD2
+setSinglePress	KEYWORD2
+setDebounceDelay	KEYWORD2
+getDebounceDelay	KEYWORD2
+isPressed	KEYWORD2
+stateChanged	KEYWORD2
+
+## PushButtonAutoRepeat
+init	KEYWORD2
+getSinglePress	KEYWORD2
+setSinglePress	KEYWORD2
+setDebounceDelay	KEYWORD2
+getDebounceDelay	KEYWORD2
+isPressed	KEYWORD2
+stateChanged	KEYWORD2
+registerKeyPressCallback	KEYWORD2
+setRepeatDelay	KEYWORD2
+getRepeatDelay	KEYWORD2
+setRepeatPeriod	KEYWORD2
+getRepeatPeriod	KEYWORD2
+heldDown	KEYWORD2
+handle	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BUTTON_NOCHANGE	LITERAL1
+BUTTON_PRESSED	LITERAL1
+BUTTON_RELEASED	LITERAL1
