@@ -8,17 +8,17 @@
 
 Simple push button class that supports debouncing. `stateChanged()` returns press and release events implementing debouncing.
 
-	```C
-	PushButton< bool ActiveHighOrLow >
-	{
-	  PushButton(pbPin, DebounceDelay);
-	  void init(); // called to initialize 
-	  void setDebounceDelay(delay); // Sets the debouncing delay in milliseconds 
-	  unsigned long getDebounceDelay(); // Returns the debouncing delay in milliseconds 
-	  bool isPressed(); // Is the button being (held) pressed in the moment
-	  byte stateChanged(); // Detect state change of a button, returns BUTTON_PRESSED, BUTTON_RELEASED or BUTTON_NOCHANGE but only after the debounce delay time has passed 
-	}
-	```
+  ```C
+  PushButton< bool ActiveHighOrLow >
+  {
+    PushButton(pbPin, DebounceDelay);
+    void init(); // called to initialize 
+    void setDebounceDelay(delay); // Sets the debouncing delay in milliseconds 
+    unsigned long getDebounceDelay(); // Returns the debouncing delay in milliseconds 
+    bool isPressed(); // Is the button being (held) pressed in the moment
+    byte stateChanged(); // Detect state change of a button, returns BUTTON_PRESSED, BUTTON_RELEASED or BUTTON_NOCHANGE but only after the debounce delay time has passed 
+  }
+  ```
 
 Examle:
 
