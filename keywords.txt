@@ -9,7 +9,7 @@
 ButtonStateChange	KEYWORD1
 PushButton	KEYWORD1
 PushButtonAutoRepeat	KEYWORD1
-PushButton2SpeedAutoRepeat KEYWORD1
+PushButton2SpeedAutoRepeat	KEYWORD1
 PushButtonAutoAcceleratedRepeat	KEYWORD1
 
 #######################################
