@@ -3,11 +3,12 @@
 // supports active high and active low pusbuttons
 // debouncing, autorepeat and acceleration of autorepeat
 // (c) Dejan Gjorgjevikj, 2018
+// 09.11.2023 - added "this->" before some function calls to satisfy modern compilers
 
 #ifndef _YAPUSHBUTTON_h
 #define _YAPUSHBUTTON_h
 
-#define _YAPUSHBUTTON_VERSION 0.91.0.1
+#define _YAPUSHBUTTON_VERSION 0.91.0.2
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
@@ -239,7 +240,7 @@ public:
 	unsigned long heldDown()
 	{
 		unsigned long r = 0UL;
-		bool currentButtonState = isPressed();
+		bool currentButtonState = this->isPressed();
 
 		if (debounceWaiting) // are we waiting for the debounce period to pass?
 		{
@@ -381,11 +382,11 @@ public:
 	/// after repeatDelayAcc milliseconds starts to autorepeat at faster speed </remark> 
 	void handle()
 	{
-		unsigned long bpDur = heldDown();
-		if (!getSinglePress() && bpDur>getDebounceDelay())
+		unsigned long bpDur = this->heldDown();
+		if (!this->getSinglePress() && bpDur> this->getDebounceDelay())
 		{
-			keyPressCallback();
-			setSinglePress(true);
+			this->keyPressCallback();
+			this->setSinglePress(true);
 			lastChangeTime = millis();
 		}
 		if (bpDur > repeatDelay)
@@ -395,7 +396,7 @@ public:
 			{
 				if (now - lastChangeTime > repeatPeriodAcc)
 				{
-					keyPressCallback();
+					this->keyPressCallback();
 					lastChangeTime = now;
 				}
 			}
@@ -403,13 +404,13 @@ public:
 			{
 				if (now - lastChangeTime > repeatPeriod)
 				{
-					keyPressCallback();
+					this->keyPressCallback();
 					lastChangeTime = now;
 				}
 			}
 		}
 		if (bpDur == 0)
-			setSinglePress(false);
+			this->setSinglePress(false);
 	}
 };
 
@@ -519,11 +520,11 @@ public:
 	/// after configured milliseconds starts to accelerate autorepeat at given factor </remark> 
 	void handle()
 	{
-		unsigned long bpDur = heldDown(); 
-		if (!getSinglePress() && bpDur > getDebounceDelay())
+		unsigned long bpDur = this->heldDown();
+		if (!this->getSinglePress() && bpDur > this->getDebounceDelay())
 		{
-			keyPressCallback();
-			setSinglePress(true);
+			this->keyPressCallback();
+			this->setSinglePress(true);
 			lastChangeTime = millis();
 			currentRepeatPeriod = repeatPeriod;
 		}
@@ -534,12 +535,12 @@ public:
 			{
 				if (currentRepeatPeriod>= repeatAcc)
 					currentRepeatPeriod-= repeatAcc;
-				keyPressCallback();
+				this->keyPressCallback();
 				lastChangeTime = now;
 			}
 		}
 		if (bpDur == 0)
-			setSinglePress(false);
+			this->setSinglePress(false);
 	}
 };
 
