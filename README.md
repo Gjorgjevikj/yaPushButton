@@ -121,5 +121,5 @@ Implements gradual acceleration of auto-repeat as the button is being held depre
 
 See the examples in the examples\ folder.
 
-Comments are velcome.
+Comments are welcome.
 
