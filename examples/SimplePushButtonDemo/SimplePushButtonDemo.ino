@@ -5,15 +5,15 @@ const int BUZZER_PIN = 8;
 
 // Active low push buttons - all connecting to GND
 const int PB_PIN_PLUS = 12;
-const int PB_PIN_MINUS = 10;
-const int PB_PIN_START = 11;
+const int PB_PIN_MINUS = 11;
+const int PB_PIN_START = 10;
 
 const int LED_PIN = 13;
 const int DEVICE_PIN = 9;
 
-// A simple button with debouncing (without autorepat)
+// A simple button with debouncing (without autorepeat)
 PushButton<> Button1(PB_PIN_MINUS); 
-PushButton<> Button2(PB_PIN_START, 500); // this button will react after beein depressed at least 0.5s
+PushButton<> Button2(PB_PIN_START, 500); // this button will react after being depressed at least 0.5s
 PushButton<> Button3(PB_PIN_PLUS); 
 
 void setup() 
@@ -42,7 +42,7 @@ void setup()
 
 void toggleDevice()
 {
-  static bool deviceState = false; // device is initally off
+  static bool deviceState = false; // device is initially off
   deviceState = !deviceState;
   if(deviceState)
   {
@@ -58,7 +58,7 @@ void toggleDevice()
 
 void loop() 
 {
-  // light the led while any of the buttons is beeing held down
+  // light the led while any of the buttons is being held down
   if(Button1.isPressed() || Button2.isPressed() || Button3.isPressed())
     digitalWrite(LED_PIN, HIGH);
   else    

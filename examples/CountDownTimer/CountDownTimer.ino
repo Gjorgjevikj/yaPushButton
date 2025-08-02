@@ -4,16 +4,16 @@
 	Updated:	08.09.2018
     Author:     Dejan Gjorgjevikj <dejan.gjorgjevikj@gmail.com>
 
-An example program that uses the yaPushButton library, implemneting a simple countdown timer. 
-Utilizes 3 buttons: +, - and S (start/stop), all conecting the pin to ground when being pressed
+An example program that uses the yaPushButton library, implementing a simple countdown timer. 
+Utilizes 3 buttons: +, - and S (start/stop), all connecting the pin to ground when being pressed
 one output that switches a device on/off (drives a relay, active high) 
-and a passive buzzer to signal end of coutdown and also as feedback 
+and a passive buzzer to signal end of countdown and also as feedback 
 during setting the time (or changing it while the timer is running)
 and a display showing the remaining time (simulated by printing to serial in this example)
 
-The program starts in setup mode where it enables setting the inital timer value (in minutes) by 
+The program starts in setup mode where it enables setting the initial timer value (in minutes) by 
 pressing the + and - buttons while the display is flashing.
-Pressing the S button turns on the device and starts the coundown. 
+Pressing the S button turns on the device and starts the countdown. 
 In countdown mode the remaining time is shown on the display. 
 Pressing the + or - button while in countdown, will increment / decrement the remaining time by 1 minute.
 Pressing the S button will stop the countdown and turn off the device.
@@ -25,8 +25,8 @@ Then the cycle repeats (can set the time again ...)
 
 //Push buttons
 const int PLUS_PB_PIN = 12;
-const int MINUS_PB_PIN = 10;
-const int START_PB_PIN = 11;
+const int MINUS_PB_PIN = 11;
+const int START_PB_PIN = 10;
 // Passive buzzer
 const int BUZZER_PIN = 8;
 // Flashing LED
@@ -45,7 +45,7 @@ public:
 	void init() { changed = false; }
 	void show() 
 	{
-		if (changed) // print on seraial only if the value has changed from the one previsly shown
+		if (changed) // print on serial only if the value has changed from the one previously shown
 		{
 			for (int i = DISP_SIZE-1; i >=0 ; i--)
 				Serial.print(value[i]);
@@ -103,11 +103,11 @@ private:
 };
 
 // Push buttons...
-// A button that when hold down autorepats at first and then accelerates autorepat (up to a certain point)
+// A button that when hold down autorepeats at first and then accelerates autorepeat (up to a certain point)
 PushButtonAutoAcceleratedRepeat<> ButtonPlus(PLUS_PB_PIN); // + button
-// A button that when hold down autorepats at first and then enters 2-nd speed of autorepeat
+// A button that when hold down autorepeats at first and then enters 2-nd speed of autorepeat
 PushButton2SpeedAutoRepeat<> ButtonMinus(MINUS_PB_PIN); // - button
-// A button without autorepat
+// A button without autorepeat
 PushButton<> ButtonStartStop(START_PB_PIN); // start / stop button
 
 Display display;
@@ -119,14 +119,14 @@ Display display;
 // ToDo - implement void * as argument to the callback so no global will be needed
 int *pval;
 
-int cntDtime; // time setted for countdown timer
-unsigned long devicerun; // toal number of milliseconds the device was running
+int cntDtime; // time set for countdown timer
+unsigned long devicerun; // total number of milliseconds the device was running
 uint8_t durs = 5; // duration 1-99
 
 // Changes the value pointed by pval, by changeBy on each call, checking for limits 
 // returns false if out of bounds
 template <typename T>
-inline bool valChange(T *pval, T changeBy, T lowLimit = 1, T upLimit = 99)
+inline bool valChange(T *pval, T changeBy, T lowLimit = (T)1, T upLimit = (T)99)
 {
 	if ((changeBy > 0) && (*pval > upLimit - changeBy) || (changeBy < 0) && (*pval < lowLimit - changeBy))
 		return false;
@@ -150,7 +150,7 @@ void mbService()
 		tone(BUZZER_PIN, 500, 40UL);
 }
 
-// Changes a value of an integer by cahangBy, checking bounds
+// Changes a value of an integer by given value (cahangBy), checking bounds
 void UpDownSet(int &v, void(*keypess_plusB)(), void(*keypess_minusB)())
 {
 	// set the global pointer to point to the value to be changed by pressing the +/- button
@@ -164,7 +164,7 @@ void UpDownSet(int &v, void(*keypess_plusB)(), void(*keypess_minusB)())
 	ButtonPlus.registerKeyPressCallback(keypess_plusB);
 	ButtonMinus.registerKeyPressCallback(keypess_minusB);
 
-	while (ButtonStartStop.stateChanged() != BUTTON_PRESSED) // press start button to exit seting
+	while (ButtonStartStop.stateChanged() != BUTTON_PRESSED) // press start button to exit setting
 	{
 		display.show(v);
 		ButtonPlus.handle();
@@ -226,10 +226,10 @@ byte CountDownMin(int &m) // in minutes
 
 		if (ButtonPlus.isPressed() && ButtonMinus.isPressed())
 		{
-			// can show somtehing else on the display (like temperature) while both buttons are held pressed
+			// can show something else on the display (like temperature) while both buttons are held pressed
 			display.show("+-");
 		}
-		else // update the dispaly with the remaining time
+		else // update the display with the remaining time
 		{
 			if (rems < 60) // if less than 1 minute, show seconds 
 			{
@@ -240,7 +240,7 @@ byte CountDownMin(int &m) // in minutes
 			{
 				display.blinkOff();
 				display.show(remm);
-				if (rems % 2) // toggle the led on every seccond
+				if (rems % 2) // toggle the led on every second passed
 					LedOn();
 				else
 					LedOff();
@@ -252,7 +252,7 @@ byte CountDownMin(int &m) // in minutes
 			return (1); // stopped
 		}
 
-		// if button + or - is pressed (buy not both simultaneosly) increase / decrease time by 1 minute
+		// if button + or - is pressed (buy not both simultaneously) increase / decrease time by 1 minute
 		if (!(ButtonPlus.isPressed() && ButtonMinus.isPressed()))
 		{
 			int premm = remm;
@@ -263,7 +263,7 @@ byte CountDownMin(int &m) // in minutes
 				valChange(&endt, (remm - premm) * 1000L * 60L, 1000 * 60L, 99000 * 60L);
 		}
 	}
-	return(0); // finshed regularly
+	return(0); // finished regularly
 }
 
 byte CountEnded() 
@@ -294,7 +294,7 @@ byte CountEnded()
 		}
 		delay(1);
 	}
-	return(0); // finshed regularly
+	return(0); // finished regularly
 }
 
 
@@ -322,7 +322,7 @@ void loop()
 {
 	UpDownSet(cntDtime, pbService, mbService);
 	durs = cntDtime;
-	Serial.print("Seted time: ");
+	Serial.print("Set time: ");
 	Serial.print(cntDtime);
 	Serial.println(" min.");
 

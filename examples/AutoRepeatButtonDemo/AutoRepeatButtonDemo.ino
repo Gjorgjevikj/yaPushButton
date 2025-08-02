@@ -6,8 +6,8 @@ const int BUZZER_PIN = 8;
 
 // Active low push buttons - all connecting to GND
 const int PB_PIN_PLUS = 12;
-const int PB_PIN_MINUS = 10;
-const int PB_PIN_START = 11;
+const int PB_PIN_MINUS = 11;
+const int PB_PIN_START = 10;
 
 const int LED_PIN = 13;
 const int DEVICE_PIN = 9;
@@ -30,7 +30,7 @@ void Button3Callback()
 	Serial.print('3');
 }
 
-// A button with auto-repaet
+// A button with auto-repeat
 PushButtonAutoRepeat<> Button1(PB_PIN_MINUS, Button1Callback);
 PushButton2SpeedAutoRepeat<> Button2(PB_PIN_START, Button2Callback);
 PushButtonAutoAcceleratedRepeat<> Button3(PB_PIN_PLUS, Button3Callback);
@@ -62,7 +62,7 @@ void setup()
 
 void loop() 
 {
-  // light the led while any of the buttons is beeing held down
+  // light the led while any of the buttons is being held down
   if(Button1.isPressed() || Button2.isPressed() || Button3.isPressed())
     digitalWrite(LED_PIN, HIGH);
   else    
@@ -82,9 +82,9 @@ void loop()
 }
 
 
-// handle diagnostic informations given by assertion and abort program execution:
+// handle diagnostic information given by assertion and abort program execution:
 void __assert(const char *__func, const char *__file, int __lineno, const char *__sexp) {
-	// transmit diagnostic informations through serial link. 
+	// transmit diagnostic information through serial link. 
 	Serial.print(F("Assertion @ line# "));
 	Serial.print(__lineno, DEC);
 	Serial.print(F(" failed: ("));

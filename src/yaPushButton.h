@@ -1,14 +1,15 @@
 // PushButton.h
 // (yet another) set of classes for pushbutton debouncing
-// supports active high and active low pusbuttons
+// supports active high and active low pushbuttons
 // debouncing, autorepeat and acceleration of autorepeat
 // (c) Dejan Gjorgjevikj, 2018
 // 09.11.2023 - added "this->" before some function calls to satisfy modern compilers
+// 02.08.2025 - bunch of spelling mistakes in the comments corrected
 
 #ifndef _YAPUSHBUTTON_h
 #define _YAPUSHBUTTON_h
 
-#define _YAPUSHBUTTON_VERSION 0.91.0.2
+#define _YAPUSHBUTTON_VERSION 0.91.0.3
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
@@ -45,7 +46,7 @@ class PushButton
 // operation
 /// <summary> the last time the output pin was toggled </summary> 
 	 unsigned long stateChangedTimeStamp;  
-/// <summary> true while waiting for button to stabilize - waiting for the debunce time to pass </summary> 
+/// <summary> true while waiting for button to stabilize - waiting for the debounce time to pass </summary> 
 	 bool debounceWaiting : 1; 
 /// <summary> the previous state of the button </summary> 
 	 bool previousButtonState : 1 ;
@@ -65,7 +66,7 @@ class PushButton
 	/// <summary> initializes the PushButton object </summary>
 	void init()
 	{
-		pinMode(pin, ACT ? INPUT : INPUT_PULLUP); // acive low	
+		pinMode(pin, ACT ? INPUT : INPUT_PULLUP); // active low	
 		// stateChangedTimeStamp = 0;
 		debounceWaiting = false; // not in debounce
 		previousButtonState = false; // not pressed
@@ -73,18 +74,18 @@ class PushButton
 
 	/// <summary> The button press has been registered before autorepeat is triggered </summary>
 	/// <returns> Has the button press already been registered </returns>
-	/// <remarks> provides acces to bitmapped varibale in the base class for derived classes 
+	/// <remarks> provides access to bitmapped variable in the base class for derived classes 
 	/// Workaround for Arduino compiler (avr-gcc and others) problems https://pastebin.com/hFNx3FVG
-	/// as accesing protected members of a template base class from indirectly derived classes is not suppoted by this compiler 
+	/// as accessing protected members of a template base class from indirectly derived classes is not suppoted by this compiler 
 	/// as of 22.07.2018 </remarks>
 	bool getSinglePress()
 	{
 		return singlePress;
 	}
 	/// <summary> Mark that the button press has been registered before autorepeat is triggered </summary>
-	/// <remarks> provides acces to bitmapped varibale in the base class for derived classes 
+	/// <remarks> provides access to bitmapped variable in the base class for derived classes 
 	/// Workaround for Arduino compiler (avr-gcc and others) problems https://pastebin.com/hFNx3FVG
-	/// as accesing protected members of a template base class from indirectly derived classes is not suppoted by this compiler 
+	/// as accessing protected members of a template base class from indirectly derived classes is not suppoted by this compiler 
 	/// as of 22.07.2018 </remarks>
 	void setSinglePress(bool v)
 	{
@@ -109,7 +110,7 @@ class PushButton
 	/// <returns> true if the button is pressed in the moment </returns>
 	bool isPressed()
 	{
-		// if ACT is false (button active low) bbeing pressedDebounced means reding low signal
+		// if ACT is false (button active low) being pressedDebounced means reding low signal
 		return ACT ? digitalRead(pin) : !digitalRead(pin);
 	}
 
@@ -118,7 +119,7 @@ class PushButton
 	/// <remark> returns BUTTON_PRESSED if the button has been pressed, but only after the debounce time has passed 
 	/// BUTTON_RELEASED if the button has been released but only after the debounce time has passed 
 	/// otherwise returns BUTTON_NOCHANGE.
-	/// To be called repeatidly in a loop </remark>
+	/// To be called repeatedly in a loop </remark>
 	byte stateChanged()
 	{
 		byte r = BUTTON_NOCHANGE; 
@@ -154,7 +155,7 @@ class PushButton
 /// ACT determines active low = false (default) 
 /// - push button that connects to GND when pressed 
 /// or active high push button
-/// adds autorepeat features and callback function to be called automaticaly when the button is pressedDebounced
+/// adds autorepeat features and callback function to be called automatically when the button is pressedDebounced
 /// keeps track of the time the button has been held pressedDebounced
 /// </remarks>
 template < bool ACT = false >
@@ -169,7 +170,7 @@ class PushButtonAutoRepeat : public PushButton<ACT>
 protected:
 	/// <summary> the delay before autorepeat begins </summary> 
 	unsigned long repeatDelay; 
-	/// <summary> the autorepeating period </summary> 
+	/// <summary> the auto repeating period </summary> 
 	unsigned long repeatPeriod; 
 	/// <summary> the function to be called on each keypress event </summary> 
 	void(*keyPressCallback)();
@@ -207,14 +208,14 @@ public:
 		keyPressCallback = keyPressFunction;
 	}
 
-	/// <summary> Sets the delay the button has to be hold pressed before autorepet starts </summary>
+	/// <summary> Sets the delay the button has to be hold pressed before autorepeat starts </summary>
 	/// <param name="RepeatDelay"> The delay in milliseconds before autorepeat begins </param>
 	void setRepeatDelay(unsigned long RepeatDelay)
 	{
 		repeatDelay = RepeatDelay;
 	}
 
-	/// <summary> get the delay the button has to be hold pressed before autorepet starts </summary>
+	/// <summary> get the delay the button has to be hold pressed before autorepeat starts </summary>
 	/// <returns> The delay in milliseconds before autorepeat begins </returns>
 	unsigned long getRepeatDelay() const
 	{
@@ -236,7 +237,7 @@ public:
 	}
 
 	/// <summary> For how long the button has been held pressed </summary>
-	/// <returns> the time in milliseconds the button is beeing held pressed </returns>
+	/// <returns> the time in milliseconds the button is being held pressed </returns>
 	unsigned long heldDown()
 	{
 		unsigned long r = 0UL;
@@ -271,10 +272,10 @@ public:
 		return r;
 	}
 
-	/// <summary> To be called repeatidly in a loop (services autorepeating calls) </summary>
+	/// <summary> To be called repeatedly in a loop (services auto repeating calls) </summary>
 	/// <remark> The callback function has to be registered first
 	/// keeps track on the button isPressed nad calls the callback function 
-	/// one call after the debounce time has passed and than if the button is still beeing held down 
+	/// one call after the debounce time has passed and than if the button is still being held down 
 	/// for more than repeatDelay ms, autorepeat starts calling the function every repeatPeriod ms </remark> 
 	void handle()
 	{
@@ -303,11 +304,11 @@ public:
 /// </summary>
 /// <remarks>
 /// Implements a push button functionality with debouncing and autorepeat feature with slow and faster speed
-/// starts to repete faster after the button has been held longer
+/// starts to repeat faster after the button has been held longer
 /// ACT determines active low = false (default) 
 /// - push button that connects to GND when pressed 
 /// or active high push button
-/// adds autorepeat features and callback function to be called automaticaly when the button is pressedDebounced
+/// adds autorepeat features and callback function to be called automatically when the button is pressedDebounced
 /// keeps track of the time the button has been held pressed
 /// </remarks>
 template < bool ACT = false >
@@ -320,7 +321,7 @@ class PushButton2SpeedAutoRepeat : public PushButtonAutoRepeat<ACT>
 protected:
 	/// <summary> when hold down the delay before autorepeat changes to faster speed </summary> 
 	unsigned long repeatDelayAcc; // has to be greater than repeatDelay
-	/// <summary> the period for faster autorepeating </summary> 
+	/// <summary> the period for faster auto repeating </summary> 
 	unsigned long repeatPeriodAcc;
 
 public:
@@ -374,10 +375,10 @@ public:
 		return repeatPeriodAcc;
 	}
 
-	/// <summary> To be called repeatidly in a loop (services autorepeating calls) </summary>
+	/// <summary> To be called repeatedly in a loop (services auto repeating calls) </summary>
 	/// <remark> The callback function has to be registered first
 	/// keeps track on the button isPressed nad calls the callback function 
-	/// one call after the debounce time has passed and than if the button is still beeing held down 
+	/// one call after the debounce time has passed and than if the button is still being held down 
 	/// for more than repeatDelay ms, autorepeat starts calling the function every repeatPeriod ms 
 	/// after repeatDelayAcc milliseconds starts to autorepeat at faster speed </remark> 
 	void handle()
@@ -419,14 +420,14 @@ public:
 /// </summary>
 /// <remarks>
 /// Implements a push button functionality with debouncing and autorepeat feature with acceleration
-/// repetes faster as the button is beeing held longer
+/// repeats faster as the button is being held longer
 /// ACT determines active low = false (default) 
 /// - push button that connects to GND when pressed 
 /// or active high push button
-/// adds autorepeat features and callback function to be called automaticaly when the button is pressedDebounced
+/// adds autorepeat features and callback function to be called automatically when the button is pressedDebounced
 /// keeps track of the time the button has been held pressed
 /// </remarks>
-// adds acceleration (faster repet aret) the button is beeinh held longer
+// adds acceleration (faster repeat rate) as the button is being held pressed longer
 template < bool ACT = false >
 class PushButtonAutoAcceleratedRepeat : public PushButtonAutoRepeat<ACT>
 {
@@ -512,10 +513,10 @@ public:
 		return repeatMinPeriod;
 	}
 
-	/// <summary> To be called repeatidly in a loop (services autorepeating calls) </summary>
+	/// <summary> To be called repeatedly in a loop (services auto repeating calls) </summary>
 	/// <remark> The callback function has to be registered first
 	/// keeps track on the button isPressed nad calls the callback function 
-	/// one call after the debounce time has passed and than if the button is still beeing held down 
+	/// one call after the debounce time has passed and than if the button is still being held down 
 	/// for more than repeatDelay ms, autorepeat starts calling the function every repeatPeriod ms 
 	/// after configured milliseconds starts to accelerate autorepeat at given factor </remark> 
 	void handle()

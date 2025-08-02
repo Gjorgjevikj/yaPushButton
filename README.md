@@ -20,7 +20,7 @@ Simple push button class that supports debouncing. `stateChanged()` returns pres
   }
   ```
 
-Examle:
+Example:
 
   ```C
   PushButton<> Button1(PB_PIN); 
@@ -60,7 +60,7 @@ Implements auto-repeat when the button is being held depressed. Callback functio
   }
   ```
 
-Examle:
+Example:
 
   ```C
   void Button1Callback()
@@ -121,5 +121,5 @@ Implements gradual acceleration of auto-repeat as the button is being held depre
 
 See the examples in the examples\ folder.
 
-Comments are velcome.
+Comments are welcome.
 
